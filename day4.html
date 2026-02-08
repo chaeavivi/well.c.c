@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Day 4 목적 있는 글쓰기 기획 워크시트</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #1e293b; /* Slate 800 */
+            --accent-color: #fbbf24; /* Amber 400 */
+            --bg-color: #f8fafc;
+            --line-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #e2e8f0;
+            margin: 0;
+            padding: 40px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--primary-color);
+        }
+
+        /* A4 Paper Style */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            background: white;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        /* Print Controls */
+        .controls-container {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            width: 100%;
+            max-width: 210mm;
+        }
+
+        .warning-box {
+            background-color: #fef2f2;
+            color: #b91c1c;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border: 1px solid #fca5a5;
+            font-size: 0.95rem;
+            font-weight: 500;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Noto Sans KR', sans-serif;
+            transition: opacity 0.2s;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .btn-print {
+            background-color: #2563eb;
+        }
+
+        /* Header */
+        header {
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+
+        h1 {
+            font-family: 'Noto Serif KR', serif;
+            font-size: 24pt;
+            margin: 0;
+            line-height: 1.2;
+        }
+
+        .sub-header {
+            font-size: 10pt;
+            color: #64748b;
+            text-align: right;
+        }
+
+        /* Quote */
+        .quote-box {
+            background-color: #f1f5f9;
+            border-left: 5px solid var(--accent-color);
+            padding: 15px;
+            margin-bottom: 30px;
+            font-style: italic;
+            color: #475569;
+        }
+
+        /* Sections */
+        .section {
+            margin-bottom: 25px;
+        }
+
+        .section-title {
+            font-size: 14pt;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent-color);
+            margin-right: 10px;
+            border-radius: 50%;
+        }
+
+        .question {
+            font-size: 11pt;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .tip {
+            font-size: 9pt;
+            color: #64748b;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        /* Input Areas */
+        .input-box {
+            width: 100%;
+            border: 2px solid var(--line-color);
+            border-radius: 8px;
+            padding: 12px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 11pt;
+            color: #334155;
+            background-color: #fff;
+            min-height: 50px;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-box:focus {
+            border-color: var(--accent-color);
+            background-color: #fffbeb;
+        }
+
+        .input-line {
+            border: none;
+            border-bottom: 1px solid #94a3b8;
+            width: 100%;
+            padding: 5px 0;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 11pt;
+            outline: none;
+            background: transparent;
+        }
+
+        /* Specific Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .structure-box {
+            background-color: #f8fafc;
+            border: 1px solid var(--line-color);
+            padding: 15px;
+            border-radius: 8px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid var(--line-color);
+            text-align: center;
+            font-size: 10pt;
+            color: #64748b;
+        }
+
+        /* Print Media Query */
+        @media print {
+            body {
+                background: none;
+                padding: 0;
+            }
+            .page {
+                width: 100%;
+                height: 100%;
+                box-shadow: none;
+                padding: 20mm; /* Ensure padding is kept for print */
+                margin: 0;
+            }
+            .controls-container {
+                display: none;
+            }
+            .input-box {
+                border: 1px solid #cbd5e1; /* Make borders visible in print */
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls-container">
+        <div class="warning-box">
+            ⚠️ <b>작성 도중 창을 닫으면 내용이 사라집니다!</b><br>
+            다 쓰시고 꼭 <b>[PDF로 저장]</b> 버튼을 눌러 파일로 저장해주세요.
+        </div>
+        <button class="btn btn-print" onclick="window.print()">🖨️ 작성 완료 후 PDF로 저장하기</button>
+    </div>
+
+    <div class="page">
+        <header>
+            <h1>목적 있는 글쓰기 기획서</h1>
+            <div class="sub-header">
+                강사 브랜딩 10일 챌린지 - Day 4<br>
+                작성자: <input type="text" placeholder="이름 입력" style="border:none; border-bottom:1px solid #ccc; width: 80px; text-align: right; font-family: inherit;">
+            </div>
+        </header>
+
+        <div class="quote-box">
+            "느낌대로 쓰면 일기이고, 기획하고 쓰면 비즈니스입니다."<br>
+            <span style="font-size: 0.9em; margin-top: 5px; display: block;">- 5일차 '정식 브랜딩 글' 발행을 위한 사전 설계도</span>
+        </div>
+
+        <!-- 1. 타겟 설정 -->
+        <div class="section">
+            <div class="section-title">1. 타겟 설정 (Targeting)</div>
+            <div class="question">Q. 이 글은 구체적으로 누구를 위해 쓰는 글인가요?</div>
+            <span class="tip">* Tip: '모두'가 아닌 '한 명'을 콕 집을수록 글은 날카로워집니다. (예: 3월 기업 강의를 준비하는 HR 담당자)</span>
+            <div class="input-box" contenteditable="true" placeholder="여기에 타겟을 구체적으로 적어보세요..."></div>
+        </div>
+
+        <!-- 2. 목적 정의 -->
+        <div class="section">
+            <div class="section-title">2. 목적 정의 (Objective)</div>
+            <div class="question">Q. 독자가 이 글을 읽고 난 후, 어떤 반응을 보이길 원하나요?</div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+                <div style="display: flex; align-items: center;">
+                    <span style="width: 60px; font-weight: 600; color: #d97706;">감정</span>
+                    <input type="text" class="input-line" placeholder="어떤 마음이 들게 할까요? (예: 이 사람, 진짜 전문가네?)">
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span style="width: 60px; font-weight: 600; color: #2563eb;">생각</span>
+                    <input type="text" class="input-line" placeholder="어떤 판단을 하게 할까요? (예: 연락하면 해결되겠다.)">
+                </div>
+                <div style="display: flex; align-items: center;">
+                    <span style="width: 60px; font-weight: 600; color: #16a34a;">행동</span>
+                    <input type="text" class="input-line" placeholder="무엇을 하게 만들까요? (예: 이웃추가, 문의하기)">
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. 브랜드 인상 -->
+        <div class="section">
+            <div class="section-title">3. 브랜드 인상 (Brand Impression)</div>
+            <div class="question">Q. 내 글에서 어떤 '향기(톤앤매너)'가 나길 원하나요?</div>
+            <span class="tip">* 예: 차분한, 전문적인, 친절한, 위트 있는, 날카로운 등</span>
+            <div class="input-box" contenteditable="true" style="min-height: 40px;"></div>
+        </div>
+
+        <!-- 4. 구조 설계 -->
+        <div class="section">
+            <div class="section-title">4. 구조 설계 (Structure)</div>
+            <div class="question">Q. 내일 발행할 브랜딩 글의 지도를 그려보세요.</div>
+            
+            <div class="structure-box" style="margin-top: 10px;">
+                <div style="margin-bottom: 15px;">
+                    <label style="font-weight: 700; display: block; margin-bottom: 5px;">(가제) 제목</label>
+                    <input type="text" class="input-box" style="padding: 8px;" placeholder="호기심을 자극하는 제목을 지어보세요">
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 10px;">
+                    <div style="display: flex; align-items: flex-start;">
+                        <span style="width: 100px; font-weight: 600; padding-top: 8px;">소제목 1<br><span style="font-size: 0.8em; font-weight: normal; color: #64748b;">(도입: 공감)</span></span>
+                        <div class="input-box" contenteditable="true" style="min-height: 60px;" placeholder="고객의 문제에 공감하는 내용"></div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start;">
+                        <span style="width: 100px; font-weight: 600; padding-top: 8px;">소제목 2<br><span style="font-size: 0.8em; font-weight: normal; color: #64748b;">(전개: 해결)</span></span>
+                        <div class="input-box" contenteditable="true" style="min-height: 60px;" placeholder="나만의 해결책 제시"></div>
+                    </div>
+                    <div style="display: flex; align-items: flex-start;">
+                        <span style="width: 100px; font-weight: 600; padding-top: 8px;">소제목 3<br><span style="font-size: 0.8em; font-weight: normal; color: #64748b;">(결말: 제안)</span></span>
+                        <div class="input-box" contenteditable="true" style="min-height: 60px;" placeholder="가치 제안 및 행동 유도"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>작성한 내용을 캡처하거나 저장하여 <b>단톡방</b>에 공유해주세요.<br>멘토진이 제목과 흐름에 대한 피드백을 드립니다! ✨</p>
+        </footer>
+    </div>
+
+</body>
+</html>
