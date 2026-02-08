@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웰크크</title>
+</head>
+<body>
+    <script>
+        // 2026년 03월 01일 00:00:00 (한국시간)
+        const switchDate = new Date('2026-03-01T00:00:00+09:00');
+        const currentDate = new Date();
+        
+        if (currentDate >= switchDate) {
+            // 11월 29일 이후 - 접근 불가
+            window.location.href = "-";
+        } else {
+            // 11월 29일 이전 - 메인 페이지
+            window.location.href = "https://chaeavivi.github.io/wellcc/day4.html";
+        }
+    </script>
+    
+    <div style="text-align: center; margin-top: 100px; font-family: Arial, sans-serif;">
+        <h2>웰크크 04day</h2>
+        <p>페이지로 이동 중입니다...</p>
+    </div>
+</body>
+</html>
