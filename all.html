@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title> 쏘울컬러 </title>
+    <style>
+        .color-text {
+            font-weight: bold;
+            font-size: 25px;
+        }
+        .yellow { color: black; background-color: yellow; }
+        .blue { color: white; background-color:cyan; }
+        .pink { color: black; background-color:pink; }
+        .green { color: white; background-color:green; }
+        .violet { color: white; background-color:purple; }
+        .red { color: white; background-color:red; }
+        .magenta { color: white; background-color: magenta; }
+        .royalB { color: white; background-color:navy; }
+        .orange { color: white; background-color: orange; }
+        .clear { color: white; background-color: white; }
+        table {
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 5px 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+
+
+ <h1> 나의 쏘울컬러 </h1>
+    
+    <script>
+        function calculateValues() {
+            var input = prompt("생년월일을 8글자로 입력하세요 (예: 20000101): ");
+            var year = parseInt(input.slice(0, 4));
+            var month = parseInt(input.slice(4, 6));
+            var day = parseInt(input.slice(6, 8));
+          
+
+            var birthday = day.toString();
+
+            var yearSum = Array.from(year.toString()).map(Number).reduce((a, b) => a + b, 0);
+            var monthSum = Array.from(month.toString()).map(Number).reduce((a, b) => a + b, 0);
+            var daySum = Array.from(day.toString()).map(Number).reduce((a, b) => a + b, 0);
+            var firstResult = (yearSum + monthSum + daySum).toString().padStart(2, '0');
+
+            var secondResult = Array.from(firstResult).map(Number).reduce((a, b) => a + b, 0);
+            if (secondResult > 21) {
+                secondResult += Array.from(secondResult.toString()).map(Number).reduce((a, b) => a + b, 0);
+            }
+
+            secondResult = secondResult % 21;
+
+            return [birthday, firstResult, secondResult];
+
+        }
+
+        function matchColorText(number) {
+            var colors = {
+                1: ["yellow", "yellow"],
+                2: ["blue", "royalB"],
+                3: ["pink", "pink"],
+                4: ["yellow", "green"],
+                5: ["green", "green"],
+                6: ["pink", "pink"],
+                7: ["blue", "blue"],
+                8: ["violet", "violet"],
+                9: ["red", "orange"],
+                10: ["yellow", "green"],
+                11: ["magenta", "magenta"],
+                12: ["violet", "red"],
+                13: ["violet", "violet"],
+                14: ["blue", "blue"],
+                15: ["green", "green"],
+                16: ["green", "violet"],
+                17: ["pink", "royalB"],
+                18: ["red", "pink"],
+                19: ["magenta", "yellow"],
+                20: ["magenta", "red"],
+                21: ["yellow", "yellow"],
+                22: ["magenta", "magenta"],
+                23: ["royalB", "royalB"],
+                24: ["magenta", "green"],
+                25: ["blue", "yellow"],
+                26: ["magenta", "green"],
+                27: ["orange", "yellow"],
+                28: ["yellow", "blue"],
+                29: ["blue", "magenta"],
+                30: ["blue", "blue"],
+                31: ["green", "green"],
+                32: ["royalB", "green"],
+                33: ["pink", "pink"],
+                34: ["blue", "blue"],
+                35: ["blue", "green"],
+                36: ["violet", "violet"],
+                37: ["pink", "red"],
+                38: ["yellow", "orange"],
+                39: ["green", "yellow"],
+                40: ["blue", "green"],
+                41: ["royalB", "blue"],
+                42: ["violet", "royalB"],
+                43: ["magenta", "violet"],
+                44: ["pink", "magenta"],
+                45: ["clear", "clear"],
+                46: ["orange", "pink"],
+                47: ["yellow", "yellow"],
+                48: ["violet", "pink"],
+                49: ["violet", "violet"],
+                50: ["yellow", "yellow"]
+            };
+
+            return colors[number] || ["", ""];
+        }
+
+        var results = calculateValues();
+        var birthday = results[0];
+        var firstResult = results[1];
+        var secondResult = results[2];
+
+        var color1 = matchColorText(parseInt(birthday));
+        var color2 = matchColorText(parseInt(firstResult));
+        var color3 = matchColorText(parseInt(secondResult));
+
+        var resultElement = document.createElement("table");
+        var tableContent = "";
+      
+
+        tableContent += "<tr><td><span class='color-text " + color1[0] + "'>" + color1[0] + "</span></td><td><span class='color-text " + color2[0] + "'>" + color2[0] + "</span></td><td><span class='color-text " + color3[0] + "'>" + color3[0] + "</span></td></tr>";
+        tableContent += "<tr><td><span class='color-text " + color1[1] + "'>" + color1[1] + "</span></td><td><span class='color-text " + color2[1] + "'>" + color2[1] + "</span></td><td><span class='color-text " + color3[1] + "'>" + color3[1] + "</span></td></tr>";
+
+        resultElement.innerHTML = tableContent;
+
+        document.body.appendChild(resultElement);
+    </script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>커플 컬러 타입 카드</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <style>
+   <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+      min-height: 100vh;
+    }
+
+    .header {
+      text-align: center;
+      padding: 20px;
+      font-size: 24px;
+      font-weight: bold;
+      background: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px;
+      background: white;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+      width: 100%;
+      position: fixed;
+      bottom: 0;
+      font-weight: bold;
+    }
+
+    .color-selection {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      padding: 40px;
+      flex-wrap: wrap;
+      margin-bottom: 60px;
+    }
+
+    .color-button {
+      width: 180px;
+      height: 180px;
+      border-radius: 15px;
+      border: none;
+      cursor: pointer;
+      font-size: 20px;
+      font-weight: bold;
+      color: white;
+    }
+
+    .yellow { background: linear-gradient(45deg, #FFD700, #FFA500); }
+    .green { background: linear-gradient(45deg, #1dcf7a, #45a049); }
+    .orange { background: linear-gradient(45deg, #FF8C00, #FF4500); }
+    .red { background: linear-gradient(45deg, #FF4444, #CC0000); }
+    .pink { background: linear-gradient(45deg, #ffbce5, #ff73a1); }
+
+    .cards-container {
+      display: none;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      padding: 40px;
+      margin-bottom: 80px;
+    }
+
+    .card {
+      width: 200px;
+      height: 300px;
+      cursor: pointer;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 36px;
+      font-weight: bold;
+    }
+
+    .result-card {
+      width: 90%;
+      max-width: 600px;
+      margin: 20px auto;
+      display: none;
+    }
+
+    .card-back {
+      background: white;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      margin-bottom: 20px;
+    }
+
+  .task-title {
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    color: white; 
+    margin: -30px -30px 20px -30px;
+    font-weight: bold;
+    text-shadow: 
+        -1px -1px 0 gray, /* 왼쪽 위 */
+        1px -1px 0 gray,  /* 오른쪽 위 */
+        -1px 1px 0 gray,  /* 왼쪽 아래 */
+        1px 1px 0 gray;   /* 오른쪽 아래 */
+}
+
+.task-title.yellow { background: linear-gradient(45deg, #FFD700, #FFA500); }
+.task-title.green { background: linear-gradient(45deg, #1dcf7a, #45a049); }
+.task-title.orange { background: linear-gradient(45deg, #FF8C00, #FF4500); }
+.task-title.red { background: linear-gradient(45deg, #FF4444, #CC0000); }
+.task-title.pink { background: linear-gradient(45deg, #ffbce5, #ff73a1); }
+    }
+
+    .task-content {
+      font-size: 16px;
+      line-height: 1.8;
+      margin: 20px 0;
+      padding: 20px;
+      background: #f8f8f8;
+      border-radius: 8px;
+    }
+
+    .button-group {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .save-image-btn, .back-button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      color: white;
+    }
+
+    .save-image-btn {
+      background: #6c9286;
+    }
+
+    .back-button {
+      background: #c9a0dc;
+    }
+
+    .save-image-btn:hover { background: #cfe1e0; }
+    .back-button:hover { background: #e2dcf5; }
+
+    .result-footer {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+      font-weight: bold;
+    }
+
+  </style>
+</head>
+<body>
+  <div class="header">커플 컬러 타입</div>
+
+  <div class="color-selection">
+    <button class="color-button yellow" onclick="showCards('yellow')">옐로우 타입</button>
+    <button class="color-button green" onclick="showCards('green')">그린 타입</button>
+    <button class="color-button orange" onclick="showCards('orange')">오렌지 타입</button>
+    <button class="color-button red" onclick="showCards('red')">레드 타입</button>
+    <button class="color-button pink" onclick="showCards('pink')">핑크 타입</button>
+  </div>
+
+  <div class="cards-container" id="cardsContainer"></div>
+
+  <div id="resultCard" class="result-card">
+    <div class="card-back">
+      <div class="task-title"></div>
+      <div class="task-content" id="resultContent"></div>
+      <div class="result-footer">채아힐링센터</div>
+    </div>
+    <div class="button-group">
+      <button class="save-image-btn" onclick="saveAsImage()">결과 이미지로 저장</button>
+      <button class="back-button" onclick="goBack()">돌아가기</button>
+    </div>
+  </div>
+
+  <div class="footer">채아힐링센터</div>
+
+  <script>
+     const tasks = {
+      yellow: {
+        names: [
+          "감사 일기 작성하기",
+          "칭찬 릴레이",
+          "사랑의 쪽지 프로젝트",
+          "하루 한 번 음성메시지",
+          "주간 감정 공유회"
+        ],
+        details: [
+          "• 매일 저녁 연인의 좋은 점 3가지 적기\n• 주 1회 직접 읽어주기\n• 한 달간 지속하기",
+          "• 아침, 점심, 저녁 각각 한 번씩 칭찬하기\n• 구체적인 상황과 함께 표현하기\n• 같은 칭찬 반복하지 않기",
+          "• 매주 3개의 사랑의 메시지 숨겨두기\n• 예상치 못한 장소에 배치하기\n• 발견 후 감정 나누기",
+          "• 매일 30초 이상의 진심 담긴 메시지 보내기\n• 그날의 감정과 생각 담기\n• 상대방 메시지에 반드시 답하기",
+          "• 매주 일요일 30분 대화 시간 가지기\n• 한 주간의 감정 변화 이야기하기\n• 서로의 이야기 요약해서 확인하기"
+        ]
+      },
+      green: {
+        names: [
+          "노폰 데이트",
+          "취미 교환 프로그램",
+          "미니 버킷리스트",
+          "서프라이즈 데이트",
+          "일상 공유 시간"
+        ],
+        details: [
+          "• 주 1회 2시간 휴대폰 없이 집중 데이트\n• 서로 눈 맞추며 대화하기\n• 방해 요소 최소화하기",
+          "• 월 2회 서로의 취미 함께 해보기\n• 상대방 취미에 대한 질문 준비하기\n• 경험 후기 공유하기",
+          "• 매월 함께할 3가지 새로운 활동 정하기\n• 실행 계획 함께 세우기\n• 달성 후 기념 사진 찍기",
+          "• 월 1회 번갈아가며 데이트 계획하기\n• 상대방의 취향 고려하기\n• 전날까지 비밀 유지하기",
+          "• 매일 30분 산책하며 대화하기\n• 하루 중 가장 기억에 남는 순간 공유하기\n• 서로의 계획과 고민 나누기"
+        ]
+      },
+      orange: {
+        names: [
+          "기념일 달력 만들기",
+          "주간 작은 선물",
+          "커플 타임캡슐",
+          "맞춤 선물 리스트",
+          "추억 박스 꾸미기"
+        ],
+        details: [
+          "• 우리만의 특별한 날 12개 정하기\n• 각 날짜의 의미 부여하기\n• 작은 이벤트 계획하기",
+          "• 5천원 이하의 소소한 선물 준비하기\n• 상대방의 취향/필요 고려하기\n• 선물의 의미 설명하기",
+          "• 매월 의미 있는 물건 하나씩 모으기\n• 수집 이유 기록하기\n• 6개월 후 함께 열어보기",
+          "• 서로의 위시리스트 만들기\n• 가격대별로 구분하기\n• 분기별 1개씩 실천하기",
+          "• 매주 데이트 증거품 한 가지씩 모으기\n• 사진과 짧은 메모 첨부하기\n• 한 달에 한 번 함께 보며 추억하기"
+        ]
+      },
+      red: {
+        names: [
+          "생활 도우미 프로젝트",
+          "기분 전환 서비스",
+          "미니 자원봉사",
+          "건강 챙기미",
+          "일상 케어 다이어리"
+        ],
+        details: [
+          "• 주간 일정표 공유하기\n• 서로의 힘든 일 교환해서 해주기\n• 도움 준 일 기록하기",
+          "• 상대방이 지쳐 보일 때 3가지 제안하기\n• 원하는 것 미리 파악해두기\n• 정성껏 실천하기",
+          "• 매주 한 가지씩 도움 준비하기\n• 요청하기 전에 먼저 실천하기\n• 봉사 후 피드백 주고받기",
+          "• 상대방 건강 관리 리스트 만들기\n• 주간 건강 체크 도와주기\n• 필요한 영양제/음식 준비하기",
+          "• 매일 한 가지씩 돌봄 실천하기\n• 상대방을 위한 작은 배려 기록하기\n• 주간 베스트 케어 선정하기"
+        ]
+      },
+      pink: {
+        names: [
+          "하루 3번 포옹",
+          "터치 타임",
+          "마사지 선물",
+          "스킨십 신호 만들기",
+          "운동 파트너"
+        ],
+        details: [
+          "• 눈 마주칠 때 마다 포옹하기\n• 만날 때/헤어질 때 꼭 실천하기\n• 최소 5초 이상 유지하기",
+          "• 영화 볼 때 손잡고 보기\n• TV 시청 시 기대어 앉기\n• 편안한 스킨십 유지하기",
+          "• 주 1회 10분 마사지해주기\n• 피로한 부위 집중 케어하기\n• 편안한 분위기 만들기",
+          "• 둘만의 특별한 스킨십 신호 정하기\n• 일상에서 자연스럽게 활용하기\n• 서로 편안한 수준 지키기",
+          "• 함께 스트레칭하기\n• 가벼운 운동 도와주기\n• 신체 접촉이 있는 운동 함께하기"
+        ]
+      }
+    };
+
+
+
+    let currentColor = '';
+
+    function showCards(color) {
+      currentColor = color;
+      const container = document.getElementById('cardsContainer');
+      const colorSelection = document.querySelector('.color-selection');
+      
+      colorSelection.style.display = 'none';
+      container.style.display = 'flex';
+      container.innerHTML = '';
+
+      tasks[color].names.forEach((task, index) => {
+        container.innerHTML += `
+          <div class="card ${color}" onclick="selectCard('${color}', ${index})">
+            ${index + 1}
+          </div>
+        `;
+      });
+    }
+
+ function selectCard(color, index) {
+    const resultCard = document.getElementById('resultCard');
+    const resultContent = document.getElementById('resultContent');
+    const cardsContainer = document.getElementById('cardsContainer');
+    const taskTitle = document.querySelector('.task-title');
+    
+    taskTitle.textContent = tasks[color].names[index];
+    taskTitle.className = `task-title ${color}`; // 이 부분이 추가됨
+    resultContent.innerHTML = tasks[color].details[index].split('\n').join('<br>');
+    
+    cardsContainer.style.display = 'none';
+    resultCard.style.display = 'block';
+}
+    
+
+    function goBack() {
+      const resultCard = document.getElementById('resultCard');
+      const colorSelection = document.querySelector('.color-selection');
+      
+      resultCard.style.display = 'none';
+      colorSelection.style.display = 'flex';
+    }
+
+   async function saveAsImage() {
+    const resultCard = document.querySelector('.card-back');
+    const canvas = await html2canvas(resultCard, {
+        backgroundColor: null, // 배경을 투명하게 설정
+        useCORS: true, // 외부 리소스(이미지 등)를 사용할 경우 필요
+        logging: true, // 디버깅을 위해 로그를 출력 (옵션)
+    });
+    const link = document.createElement('a');
+    link.download = '커플_컬러_타입_결과.png';
+    link.href = canvas.toDataURL('image/png'); // PNG 형식으로 저장
+    link.click();
+    }
+  </script>
+</body>
+</html>
